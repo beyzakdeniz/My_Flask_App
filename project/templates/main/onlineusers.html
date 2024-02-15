@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% if user.manager %}
+    {% block title %}
+        Online Users
+    {% endblock %}
+
+    {% block content %}
+    <h1 class="title">Online Users</h1>
+            <div class="content">
+                {% for user in online_users %}
+                    <div class="active_user">
+                        <p><b>Username: {{ user.username }}</b></p>
+                        <p>Login Date Time:{{ user.last_login.strftime('%d-%b-%Y-%H:%M:%S') }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+    {% endblock %}
+{% endif %}

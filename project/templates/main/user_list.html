@@ -1,0 +1,57 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    {% if user.manager %}
+        User List
+    {% else %}
+        User Info
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<h1 class="title">  {% if user.manager %}
+                        User List
+                    {% else %}
+                        User Info
+                    {% endif %}</h1>
+    {% if user.manager %}
+        <div class="content">
+            {% for user in users %}
+                <div class="user">
+                    <p><b>#{{ user.id }} {{ user.username }}</b></p>
+                    <b>
+                        <p class="name">{{ user.firstname }}{% if user.middlename %} {{ user.middlename }}{% endif %} {{ user.lastname }}</p>
+                    </b>
+                    <p>{{ user.birthdate.strftime('%Y-%m-%d') }}</p>
+                    <p>{{ user.email }}</p>
+                    <p>{{ user.password }}</p>
+                    {% if user.manager == False %}
+                        <a href="{{ url_for('main.user_update', id=user.id) }}">Update User</a>
+                        <hr>
+                        <form method="POST" action="{{ url_for('main.user_delete', id=user.id) }}">
+                            <input type="submit" value="Delete User"
+                                onclick="return confirm('Are you sure you want to delete this entry?')">
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="content">
+            <div class="user">
+                <p><b>#{{ user.id }} {{ user.username }}</b></p>
+                <b>
+                    <p class="name">{{ user.firstname }}{% if user.middlename %} {{ user.middlename }}{% endif %} {{ user.lastname }}</p>
+                </b>
+                <p>{{ user.birthdate.strftime('%Y-%m-%d') }}</p>
+                <p>{{ user.email }}</p>
+                <a href="{{ url_for('main.user_update', id=user.id) }}">Update User</a>
+                <hr>
+                <form method="POST" action="{{ url_for('main.user_delete', id=user.id) }}">
+                    <input type="submit" value="Delete User"
+                        onclick="return confirm('Are you sure you want to delete your account?')">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

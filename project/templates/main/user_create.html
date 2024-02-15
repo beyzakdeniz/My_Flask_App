@@ -1,0 +1,64 @@
+
+{% if user.manager %}
+    {% extends "main/base.html" %}
+{% else %}
+    {% extends "authentication/base.html" %}
+{% endif %}
+
+{% block title %}
+    {% if user.manager %}
+        Create User
+    {% else %}
+        Sign Up
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if user.manager %}
+    <h3>Create User</h3>
+{% else %}
+    <h3>Sign Up</h3>
+{% endif %}
+
+<form method="post">
+	<p>
+        <label for="username">Username:</label>
+        <input type="text" name="username">
+    </p>
+    <p>
+        <label for="firstname">First Name:</label>
+        <input type="text" name="firstname">
+    </p>
+    <p>
+        <label for="middlename">Middle Name:</label>
+        <input type="text" name="middlename">
+    </p>
+    <p>
+        <label for="lastname">Last Name:</label>
+        <input type="text" name="lastname">
+    </p>
+    <p>
+        <label for="birthdate">Birthdate:</label>
+        <input type="date" name="birthdate">
+    </p>
+    <p>
+        <label for="email">Email:</label>
+        <input type="email" name="email">
+    </p>
+    <p>
+        <label for="password1">Password:</label>
+        <input type="password" id="password1" name="password1">
+    </p>
+    <p>
+        <label for="password2">Confirm Password:</label>
+        <input type="password" id="password2" name="password2">
+    </p>
+    <p>
+        {% if user.manager %}
+            <button type="submit">Create User</button>
+        {% else %}
+            <button type="submit">Sign Up</button>
+        {% endif %}
+    </p>
+</form>
+{% endblock %}

@@ -52,7 +52,7 @@ def login_post():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/signup')
+@auth.route('/user/create')
 def signup():
     return render_template('main/user_create.html', user=current_user)
 

@@ -25,7 +25,7 @@ def create_app():
     migrate.init_app(app, db)
 
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.signup'
+    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
     # blueprint for auth routes in our app
@@ -35,6 +35,12 @@ def create_app():
     # blueprint for non-auth parts of app
     from .views.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    # blueprint for level-up parts of app
+    from .views.levelup import levelup as levelup_blueprint
+    app.register_blueprint(levelup_blueprint)
+
+    from .models import Item
 
     from .models import User
 

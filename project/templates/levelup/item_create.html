@@ -1,0 +1,23 @@
+{% extends "levelup/base.html" %}
+
+{% block title %}
+    Create Item
+{% endblock %}
+
+{% block content %}
+<h3>Create Item</h3>
+
+<form method="post">
+	<p>
+        <label for="xp">XP:</label>
+        <input type="number" name="xp">
+    </p>
+    <p>
+        <label for="content">Content:</label>
+        <textarea type="text" name="content" style="width:250px;height:150px;"></textarea>
+    </p>
+    <p>
+        <button type="submit">Create Item</button>
+    </p>
+</form>
+{% endblock %}

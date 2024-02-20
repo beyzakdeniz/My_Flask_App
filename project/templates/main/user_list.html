@@ -9,49 +9,107 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="title">  {% if user.manager %}
-                        User List
-                    {% else %}
-                        User Info
-                    {% endif %}</h1>
-    {% if user.manager %}
-        <div class="content">
-            {% for user in users %}
-                <div class="user">
-                    <p><b>#{{ user.id }} {{ user.username }}</b></p>
-                    <b>
-                        <p class="name">{{ user.firstname }}{% if user.middlename %} {{ user.middlename }}{% endif %} {{ user.lastname }}</p>
-                    </b>
-                    <p>{{ user.birthdate.strftime('%Y-%m-%d') }}</p>
-                    <p>{{ user.email }}</p>
-                    <p>{{ user.password }}</p>
-                    {% if user.manager == False %}
-                        <a href="{{ url_for('main.user_update', id=user.id) }}">Update User</a>
-                        <hr>
+    <style>
+        /* Style for the "Blue" button */
+        .blue-button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Style for the "Delete User" button */
+        .delete-user-button {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+
+        <div class="container">
+          <h1 class="title">User List</h1>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                  <th>ID</th><th>Username</th>
+                  <th>Firstname</th><th>Middlename</th><th>Lastname</th>
+                  <th>Birthdate</th>
+                  <th>Email</th>
+                  <th>Password</th>
+              </tr>
+            </thead>
+            <tbody>
+             {% if user.manager %}
+                {% for user in users %}
+                <tr>
+                    <td>#{{ user.id }}</td><td>{{ user.username }}</td>
+                    <td>{{ user.firstname }}</td><td>{% if user.middlename %} {{ user.middlename }}{% endif %}</td><td>{{ user.lastname }}</td>
+                    <td>{{ user.birthdate.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ user.email }}</td>
+<!--                    <td>{{ user.password }}</td>-->
+                    <td>
+                        <span id="password_{{ user.id }}" class="password" style="display:none;">{{ user.password }}</span>
+                        <button  onclick="togglePassword('password_{{ user.id }}')">Password</button>
+                    </td>
+                    <td>
                         <form method="POST" action="{{ url_for('main.user_delete', id=user.id) }}">
-                            <input type="submit" value="Delete User"
-                                onclick="return confirm('Are you sure you want to delete this entry?')">
+                            <input type="submit" value="Delete User" class="delete-user-button"
+                                   onclick="return confirm('Are you sure you want to delete this entry?')">
                         </form>
-                    {% endif %}
-                </div>
-            {% endfor %}
+                    </td>
+                    <td>
+                        {% if user.manager == False %}
+                            <form method="POST" action="{{ url_for('main.user_update', id=user.id) }}">
+                                <input type="submit" value="Update User" class="blue-button">
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+             {% else %}
+                <tr>
+                    <td>#{{ user.id }}</td><td>{{ user.username }}</td>
+                    <td>{{ user.firstname }}</td><td>{% if user.middlename %} {{ user.middlename }}{% endif %}</td><td>{{ user.lastname }}</td>
+                    <td>{{ user.birthdate.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ user.email }}</td>
+<!--                    <td>{{ user.password }}</td>-->
+                    <td>
+                        <span id="password_{{ user.id }}" class="password" style="display:none;">{{ user.password }}</span>
+                        <button  onclick="togglePassword('password_{{ user.id }}')">Password</button>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('main.user_delete', id=user.id) }}">
+                            <input type="submit" value="Delete User" class="delete-user-button"
+                                   onclick="return confirm('Are you sure you want to delete this entry?')">
+                        </form>
+                    </td>
+                    <td>
+                        {% if user.manager == False %}
+                            <form method="POST" action="{{ url_for('main.user_update', id=user.id) }}">
+                                <input type="submit" value="Update User" class="blue-button">
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+          </table>
         </div>
-    {% else %}
-        <div class="content">
-            <div class="user">
-                <p><b>#{{ user.id }} {{ user.username }}</b></p>
-                <b>
-                    <p class="name">{{ user.firstname }}{% if user.middlename %} {{ user.middlename }}{% endif %} {{ user.lastname }}</p>
-                </b>
-                <p>{{ user.birthdate.strftime('%Y-%m-%d') }}</p>
-                <p>{{ user.email }}</p>
-                <a href="{{ url_for('main.user_update', id=user.id) }}">Update User</a>
-                <hr>
-                <form method="POST" action="{{ url_for('main.user_delete', id=user.id) }}">
-                    <input type="submit" value="Delete User"
-                        onclick="return confirm('Are you sure you want to delete your account?')">
-                </form>
-            </div>
-        </div>
-    {% endif %}
+
+        <script>
+            function togglePassword(id) {
+                var passwordElement = document.getElementById(id);
+                if (passwordElement.style.display === "none") {
+                    passwordElement.style.display = "inline";
+                } else {
+                    passwordElement.style.display = "none";
+                }
+            }
+        </script>
 {% endblock %}
+
+

@@ -5,15 +5,29 @@
         Online Users
     {% endblock %}
 
+
     {% block content %}
-    <h1 class="title">Online Users</h1>
-            <div class="content">
+        <div class="container">
+          <h1>Online Users</h1>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>IPadress</th>
+                <th>Login Date-Time</th>
+              </tr>
+            </thead>
+            <tbody>
                 {% for user in online_users %}
-                    <div class="active_user">
-                        <p><b>Username: {{ user.username }}</b></p>
-                        <p>Login Date Time:{{ user.last_login.strftime('%d-%b-%Y-%H:%M:%S') }}</p>
-                    </div>
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>Moe</td>
+                        <td>{{ user.last_login.strftime('%d-%b-%Y-%H:%M:%S') }}</td>
+                    </tr>
                 {% endfor %}
-            </div>
+            </tbody>
+          </table>
+        </div>
     {% endblock %}
+
 {% endif %}

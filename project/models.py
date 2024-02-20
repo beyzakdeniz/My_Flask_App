@@ -20,3 +20,11 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User: {self.username}>'
 
+
+class Item(UserMixin, db.Model):
+    __tablename__ = 'items'
+    id = db.Column(db.Integer, primary_key=True)
+    xp = db.Column(db.Integer, nullable=True)
+    content = db.Column(db.Text, nullable=False)
+    is_done = db.Column(db.Boolean(), nullable=False, default=False)
+

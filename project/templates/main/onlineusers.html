@@ -21,7 +21,8 @@
                 {% for user in online_users %}
                     <tr>
                         <td>{{ user.username }}</td>
-                        <td>Moe</td>
+                        <td>{{ request.environ.get('HTTP_X_REAL_IP', request.remote_addr) }} </td>
+<!--                        <td>{{ request.access_route }} </td>-->
                         <td>{{ user.last_login.strftime('%d-%b-%Y-%H:%M:%S') }}</td>
                     </tr>
                 {% endfor %}

@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -35,10 +37,6 @@ def create_app():
     # blueprint for non-auth parts of app
     from .views.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-
-    # blueprint for level-up parts of app
-    from .views.levelup import levelup as levelup_blueprint
-    app.register_blueprint(levelup_blueprint)
 
     from .models import Item
 

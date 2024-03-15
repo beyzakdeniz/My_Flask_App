@@ -28,18 +28,24 @@ def user_create():
     return redirect(url_for('auth.signup_post'))
 
 
-@main.route('/user/update/<int:id>', methods=('GET', 'POST'))
+@main.route('/user/update/<int:idx>', methods=('GET', 'POST'))
 @login_required
-def user_update(id):
-    user = User.query.get_or_404(id)
-
+def user_update(idx):
+    user = User.query.get_or_404(idx)
     if request.method == 'POST':
-        username = request.form['username']
-        firstname = request.form['firstname']
-        middlename = request.form['middlename']
-        lastname = request.form['lastname']
-        birthdate = request.form['birthdate']
-        email = request.form['email']
+        username = request.form.get('username')
+        firstname = request.form.get('firstname')
+        middlename = request.form.get('middlename')
+        lastname = request.form.get('lastname')
+        birthdate = request.form.get('birthdate')
+        email = request.form.get('email')
+
+        print(username,
+        firstname,
+        middlename,
+        lastname,
+        birthdate,
+        email)
 
         user.username = username
         user.firstname = firstname
@@ -53,7 +59,6 @@ def user_update(id):
         flash('User data updated successfully.', category='success')
         return redirect(url_for('main.user_list'))
 
-    flash('User can not updated.', category='error')
     return render_template('main/user_update.html', user=user)
 
 

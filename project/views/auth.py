@@ -52,7 +52,7 @@ def login_post():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/user/create')
+@auth.route('/signup')
 def signup():
     return render_template('main/user_create.html', user=current_user)
 
@@ -61,14 +61,16 @@ def signup():
 def signup_post():
     if request.method == 'POST':
         # Get the data from the request body
-        username = request.form['username']
-        firstname = request.form['firstname']
-        middlename = request.form['middlename']
-        lastname = request.form['lastname']
-        birthdate = request.form['birthdate']
-        email = request.form['email']
-        password1 = request.form['password1']
-        password2 = request.form['password2']
+        username = request.form.get('username')
+        firstname = request.form.get('firstname')
+        middlename = request.form.get('middlename')
+        lastname = request.form.get('lastname')
+        birthdate = request.form.get('birthdate')
+        email = request.form.get('email')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        print(username, firstname, middlename, lastname, birthdate, email, password1, password2)
 
         # check if email has been used before
         user = User.query.filter_by(email=email).first()
